@@ -1,39 +1,53 @@
-﻿namespace Composite
+﻿using Strategy;
+
+namespace Composite
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            var div = new LightElementNode("div", DisplayType.Block, ClosingType.Paired, new List<string> { "container", "main-theme" });
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            var h1 = new LightElementNode("h1", DisplayType.Block, ClosingType.Paired);
-            h1.Add(new LightTextNode("Світла розмітка"));
 
-            var ul = new LightElementNode("ul", DisplayType.Block, ClosingType.Paired, new List<string> { "list" });
+            var body = new LightElementNode("body", DisplayType.Block, ClosingType.Paired);
 
-            var li1 = new LightElementNode("li", DisplayType.Inline, ClosingType.Paired);
-            li1.Add(new LightTextNode("Перший пункт"));
+            var header = new LightElementNode("header", DisplayType.Block, ClosingType.Paired);
+            header.Add(new LightTextNode("Це шапка сайту"));
 
-            var li2 = new LightElementNode("li", DisplayType.Inline, ClosingType.Paired);
-            li2.Add(new LightTextNode("Другий пункт"));
+            var main = new LightElementNode("main", DisplayType.Block, ClosingType.Paired);
+            main.Add(new LightTextNode("Це основний контент"));
 
-            var li3 = new LightElementNode("li", DisplayType.Inline, ClosingType.Paired);
-            li3.Add(new LightElementNode("br", DisplayType.Block, ClosingType.Single));
-            li3.Add(new LightTextNode("Третій пункт з переносом"));
+            var button = new LightElementNode("button", DisplayType.Inline, ClosingType.Paired);
+            button.Add(new LightTextNode("Натисни мене"));
+            main.Add(button);
 
-            ul.Add(li1);
-            ul.Add(li2);
-            ul.Add(li3);
+            body.Add(header);
+            body.Add(main);
 
-            div.Add(h1);
-            div.Add(ul);
+            Console.WriteLine("OБХІД ВГЛИБ");
+            var depthIterator = body.GetDepthFirstIterator();
+            while (depthIterator.HasNext())
+            {
+                LightNode node = depthIterator.Next();
+                if (node is LightElementNode element)
+                    Console.WriteLine($"Вузол (Тег): <{element.TagName}>");
+                else if (node is LightTextNode text)
+                    Console.WriteLine($"Вузол (Текст): {text.OuterHtml}");
+            }
 
-            
-            Console.WriteLine(" OUTER HTML головного елемента");
-            Console.WriteLine(div.OuterHtml);
 
-            Console.WriteLine("\nінформація про елемент");
-            Console.WriteLine($"Кількість дочірніх елементів у <div>: {div.ChildCount}");
+            Console.WriteLine("ОБХІД ВШИР");
+            var breadthIterator = body.GetBreadthFirstIterator();
+            while (breadthIterator.HasNext())
+            {
+                LightNode node = breadthIterator.Next();
+                if (node is LightElementNode element)
+                    Console.WriteLine($"Вузол (Тег): <{element.TagName}>");
+                else if (node is LightTextNode text)
+                    Console.WriteLine($"Вузол (Текст): {text.OuterHtml}");
+            }
+
+            Console.ReadKey();
         }
     }
 }
