@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Composite;
+using Composite.Visitor;
 using Strategy.Strategy;
 
 namespace Strategy
@@ -35,7 +36,11 @@ namespace Strategy
         {
             return "";
         }
-        
+
+        public override void Accept(ILightNodeVisitor visitor)
+        {
+            
+        }
 
         public override string InnerHtml => $"<img href=\"{_href}\" />";
     }

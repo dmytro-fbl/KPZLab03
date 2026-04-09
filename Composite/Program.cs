@@ -1,7 +1,8 @@
 ﻿using Composite.Command;
 using Composite.State;
-using Strategy;
 using Composite.TemplateMethod;
+using Composite.Visitor;
+using Strategy;
 
 namespace Composite
 {
@@ -102,6 +103,9 @@ namespace Composite
             button.SetState(new HiddenState());
             Console.WriteLine($"Результат рендеру: '{button.OuterHtml}'");
             */
+
+            //template method
+            /*
             Console.WriteLine("шаблонний метод");
             var container = new LightElementNode("div");
 
@@ -115,6 +119,31 @@ namespace Composite
 
             Console.WriteLine("\nРЕЗУЛЬТАТ HTML");
             Console.WriteLine(html);
+
+            */
+
+            var body = new LightElementNode("body");
+
+            var header = new LightElementNode("header");
+            header.Add(new LightTextNode("Ласкаво просимо на мій сайт"));
+
+            var main = new LightElementNode("main");
+            var button = new LightElementNode("button");
+            button.Add(new LightTextNode("Натисни мене"));
+            main.Add(button);
+
+            body.Add(header);
+            body.Add(main);
+
+            Console.WriteLine("Наш HTML");
+            Console.WriteLine(body.Render()); 
+            Console.WriteLine();
+
+            var statsVisitor = new HtmlStatsVisitor();
+
+            body.Accept(statsVisitor);
+
+            statsVisitor.PrintStatistics();
 
             Console.ReadKey();
         }

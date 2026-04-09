@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Composite.State;
+using Composite.Visitor;
 
 namespace Composite
 {
@@ -53,6 +54,16 @@ namespace Composite
         {
             return _state.Render(this);
             
+        }
+
+        public override void Accept(ILightNodeVisitor visitor)
+        {
+            visitor.Visit(this);
+
+            foreach(var child in Children)
+            {
+                child.Accept(visitor);
+            }
         }
 
         public string DefaultRender()
