@@ -1,4 +1,5 @@
 ﻿using Composite.Command;
+using Composite.State;
 using Strategy;
 
 namespace Composite
@@ -9,6 +10,8 @@ namespace Composite
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
+
+            //Iterator
             /*
 
             var body = new LightElementNode("body", DisplayType.Block, ClosingType.Paired);
@@ -50,6 +53,9 @@ namespace Composite
             }
             */
 
+            //Command
+
+            /*
             CommandManager manager = new CommandManager();
 
             var div = new LightElementNode("div", DisplayType.Block, ClosingType.Paired);
@@ -73,6 +79,24 @@ namespace Composite
             manager.Undo(); 
 
             Console.WriteLine(div.OuterHtml);
+
+            */
+
+            var button = new LightElementNode("button");
+            button.Add(new LightTextNode("Натисни"));
+
+            Console.WriteLine("Нормальний стан");
+            Console.WriteLine(button.OuterHtml);
+
+
+            Console.WriteLine("disabled стан");
+            button.SetState(new DisabledState());
+            button.Add(new LightTextNode("Цей текст не додасться"));
+            Console.WriteLine(button.OuterHtml);
+
+            Console.WriteLine("hidden стан");
+            button.SetState(new HiddenState());
+            Console.WriteLine($"Результат рендеру: '{button.OuterHtml}'");
 
             Console.ReadKey();
         }
