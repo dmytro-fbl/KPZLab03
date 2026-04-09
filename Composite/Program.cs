@@ -1,4 +1,5 @@
-﻿using Strategy;
+﻿using Composite.Command;
+using Strategy;
 
 namespace Composite
 {
@@ -8,6 +9,7 @@ namespace Composite
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
+            /*
 
             var body = new LightElementNode("body", DisplayType.Block, ClosingType.Paired);
 
@@ -46,6 +48,31 @@ namespace Composite
                 else if (node is LightTextNode text)
                     Console.WriteLine($"Вузол (Текст): {text.OuterHtml}");
             }
+            */
+
+            CommandManager manager = new CommandManager();
+
+            var div = new LightElementNode("div", DisplayType.Block, ClosingType.Paired);
+            var h1 = new LightElementNode("h1", DisplayType.Block, ClosingType.Paired);
+            h1.Add(new LightTextNode("Головний заголовок"));
+
+            var p = new LightElementNode("p", DisplayType.Block, ClosingType.Paired);
+            p.Add(new LightTextNode("Якийсь текст"));
+
+            Console.WriteLine("ДОДАЄМО ЕЛЕМЕНТИ");
+
+            ICommand addH1 = new AddNodeCommand(div, h1);
+            manager.ExecuteCommand(addH1);
+
+            ICommand addP = new AddNodeCommand(div, p);
+            manager.ExecuteCommand(addP);
+
+            Console.WriteLine(div.OuterHtml);
+
+            Console.WriteLine("\nКОРИСТУВАЧ НАТИСКАЄ Ctrl+Z");
+            manager.Undo(); 
+
+            Console.WriteLine(div.OuterHtml);
 
             Console.ReadKey();
         }

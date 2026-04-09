@@ -28,11 +28,10 @@ namespace Composite
             Children = new List<LightNode>();
         }
 
-        public void Add(LightNode node)
-        {
-            Children.Add(node);
-        }
+        public void Add(LightNode node) => Children.Add(node);
 
+
+        public void Remove(LightNode node) => Children.Remove(node);
         public override string InnerHtml
         {
             get
