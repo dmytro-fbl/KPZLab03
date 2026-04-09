@@ -1,6 +1,7 @@
 ﻿using Composite.Command;
 using Composite.State;
 using Strategy;
+using Composite.TemplateMethod;
 
 namespace Composite
 {
