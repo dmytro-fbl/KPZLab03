@@ -9,7 +9,7 @@ namespace Composite
 {
     public abstract class LightNode
     {
-        public abstract string OuterHtml { get; }
+        //public abstract string OuterHtml { get; }
         public abstract string InnerHtml { get; }
 
         public ILightNodeIterator GetDepthFirstIterator()
@@ -20,5 +20,23 @@ namespace Composite
         {
             return new BreadthFirstIterator(this);
         }
+
+        public string Render()
+        {
+            OnCreated();
+            OnClassListApplied();
+            OnStylesApplied();
+            string htmlOutput = GenerateHtml();
+
+            OnTextRendered();
+
+            return htmlOutput;
+        }
+        protected virtual void OnCreated() { }
+        protected virtual void OnClassListApplied() { }
+        protected virtual void OnStylesApplied() { }
+        protected virtual void OnTextRendered() { }
+
+        protected abstract string GenerateHtml();
     }
 }

@@ -15,7 +15,7 @@ namespace Composite
             _text = text;
         }
 
-        public override string OuterHtml => _text;
+        protected override string GenerateHtml() => _text;
         public override string InnerHtml => _text;
     }
 }

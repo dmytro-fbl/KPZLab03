@@ -82,6 +82,9 @@ namespace Composite
 
             */
 
+
+            //State
+            /*
             var button = new LightElementNode("button");
             button.Add(new LightTextNode("Натисни"));
 
@@ -97,6 +100,20 @@ namespace Composite
             Console.WriteLine("hidden стан");
             button.SetState(new HiddenState());
             Console.WriteLine($"Результат рендеру: '{button.OuterHtml}'");
+            */
+            Console.WriteLine("шаблонний метод");
+            var container = new LightElementNode("div");
+
+            var trackedButton = new TrackedButtonNode();
+            trackedButton.Add(new LightTextNode("Підписатися"));
+
+            container.Add(trackedButton);
+
+            Console.WriteLine("Викликаємо метод Render()");
+            string html = container.Render();
+
+            Console.WriteLine("\nРЕЗУЛЬТАТ HTML");
+            Console.WriteLine(html);
 
             Console.ReadKey();
         }

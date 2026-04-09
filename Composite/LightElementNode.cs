@@ -49,17 +49,24 @@ namespace Composite
 
         public void Remove(LightNode node) => Children.Remove(node);
 
+        protected override string GenerateHtml()
+        {
+            return _state.Render(this);
+            
+        }
+
         public string DefaultRender()
         {
             string attrs = Attributes.Count > 0 ? " " + string.Join(" ", Attributes) : "";
             string inner = "";
-            foreach (var child in Children) inner += child.OuterHtml;
+            foreach (var child in Children) inner += child.Render();
             return $"<{TagName}{attrs}>{inner}</{TagName}>";
         }
+        
         public override string InnerHtml => "";
         
 
-        public override string OuterHtml => _state.Render(this);
+        
         
     }
 }

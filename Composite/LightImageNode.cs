@@ -30,7 +30,12 @@ namespace Strategy
         {
             _loadStrategy.Load(_href);
         }
-        public override string OuterHtml => "";
+
+        protected override string GenerateHtml()
+        {
+            return "";
+        }
+        
 
         public override string InnerHtml => $"<img href=\"{_href}\" />";
     }
