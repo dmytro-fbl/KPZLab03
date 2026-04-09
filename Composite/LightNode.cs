@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Composite.Iterator;
+using Composite.Visitor;
 
 namespace Composite
 {
     public abstract class LightNode
     {
-        //public abstract string OuterHtml { get; }
         public abstract string InnerHtml { get; }
 
         public ILightNodeIterator GetDepthFirstIterator()
@@ -20,6 +20,8 @@ namespace Composite
         {
             return new BreadthFirstIterator(this);
         }
+
+        public abstract void Accept(ILightNodeVisitor visitor);
 
         public string Render()
         {
